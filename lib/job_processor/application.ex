@@ -9,7 +9,7 @@ defmodule JobProcessor.Application do
   def start(_type, _args) do
     children = [
       %{id: JobProcessorSup, start: {:job_processor_sup, :start_link, []}},
-      %{id: JobStorage, start: {:job_storage, :start_link, []}},
+      %{id: JobStorage, start: {:job_storage, :start_link, []}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

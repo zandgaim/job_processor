@@ -13,12 +13,7 @@ init(Req, State) ->
         <<"GET">> ->
             case job_storage:get_last_script() of
                 {ok, Script} ->
-                    Resp = cowboy_req:reply(
-                        200,
-                        #{<<"content-type">> => <<"text/plain">>},
-                        Script,
-                        Req
-                    ),
+                    Resp = send_response(Req, 200, Script),
                     {ok, Resp, State};
                 {error, not_found} ->
                     Resp = send_response(Req, 404, #{error => <<"No script stored yet">>}),

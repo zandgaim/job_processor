@@ -7,8 +7,7 @@ defmodule JobHttpHandlerIntegrationTest do
       :cowboy_router.compile([
         {:_,
          [
-           {"/", :job_http_handler, []},
-           {"/script", :job_http_handler, []}
+           {"/", :job_http_handler, []}
          ]}
       ])
 
@@ -55,15 +54,15 @@ defmodule JobHttpHandlerIntegrationTest do
     {status, resp_headers, resp_body}
   end
 
-  test "GET /script before any POST returns 404" do
+  test "GET before any POST returns 404" do
     :job_storage.clear()
-    {404, _resp_headers, body} = gun_get("/script")
+    {404, _resp_headers, body} = gun_get("/")
     decoded = :jsx.decode(body, return_maps: true)
 
     assert decoded["error"] == "No script stored yet"
   end
 
-  test "POST tasks returns sorted tasks, then GET /script returns bash script" do
+  test "POST tasks returns sorted tasks, then GET returns bash script" do
     json_body = :jsx.encode(@tasks)
     headers = [{<<"content-type">>, <<"application/json">>}]
 
@@ -75,8 +74,10 @@ defmodule JobHttpHandlerIntegrationTest do
     assert length(decoded["tasks"]) == 2
     assert hd(decoded["tasks"])["name"] == "task-1"
 
-    # Then GET /script should return generated bash script
-    {200, _resp_headers, script} = gun_get("/script")
+    # Then GET should return generated bash script
+    {200, _resp_headers, body} = gun_get("/")
+
+    script = :jsx.decode(body, return_maps: true)
 
     assert script =~ "echo 'A'"
     assert script =~ "echo 'B'"
