@@ -15,8 +15,12 @@ iex -S mix
 ```
 
 
-## Setup & Run
-
+## Test
+Utit tests:
+```
+mix test
+```
+API tests:
 POST (return sorted tasks):
 ```
   curl -X POST http://localhost:4020
