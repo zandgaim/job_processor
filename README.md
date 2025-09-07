@@ -28,5 +28,5 @@ curl -X POST http://localhost:4020 -H "Content-Type: application/json" -d '{"tas
 
 GET (returns last generated script): 
 ```
-  curl http://localhost:4020/script
+  curl http://localhost:4020/
 ```
