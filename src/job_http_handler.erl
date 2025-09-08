@@ -2,7 +2,7 @@
 -behaviour(cowboy_handler).
 
 -export([init/2]).
--export([try_decode/1]).  %% for clarity, export if you also want to test it
+-export([try_decode/1]).
 
 init(Req, State) ->
     Method = cowboy_req:method(Req),
@@ -38,10 +38,6 @@ init(Req, State) ->
                     {ok, Resp, State}
             end
     end.
-
-%% ------------------------------------------------------------------
-%% Helpers
-%% ------------------------------------------------------------------
 
 try_decode(Body) ->
     try

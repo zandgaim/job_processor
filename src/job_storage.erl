@@ -1,19 +1,13 @@
 -module(job_storage).
 -behaviour(gen_server).
 
-%% API
 -export([start_link/0, store_script/1, get_last_script/0, clear/0]).
 
-%% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 
 -record(state, {
     last_script = undefined :: undefined | binary()
 }).
-
-%%%===================================================================
-%%% API
-%%%===================================================================
 
 start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
@@ -26,10 +20,6 @@ get_last_script() ->
 
 clear() ->
     gen_server:cast(?MODULE, clear).
-
-%%%===================================================================
-%%% gen_server callbacks
-%%%===================================================================
 
 init([]) ->
     {ok, #state{}}.
